@@ -27,65 +27,6 @@
     <tbody id="weather-body">
     </tbody>
   </table>
-
-  <script>
-    let lat, lon;
-    const options = {
-      enableHighAccuracy: true,
-      timeout: 5000,
-      maximumAge: 0,
-    };
-
-    function success(pos) {
-      const crd = pos.coords;
-      lat = crd.latitude;
-      lon = crd.longitude;
-    }
-
-    function error(err) {
-      console.warn(`ERROR(${err.code}): ${err.message}`);
-    }
-
-    // Function to fetch the weather data and update the table
-    function fetchWeatherData() {
-      navigator.geolocation.getCurrentPosition(success, error, options);
-      const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${lat},${lon}?key=88DCRTFD8WZZDKLG5QWS8DQV9`;
-
-      fetch(url)
-        .then(response => response.json())
-        .then(data => {
-          const days = data.days.slice(0, 7); // Get the first 7 days
-
-          const weatherTable = document.getElementById('weather-body');
-
-          days.forEach(day => {
-            const row = document.createElement('tr');
-
-            const dayCell = document.createElement('td');
-            dayCell.textContent = day.datetime;
-            row.appendChild(dayCell);
-
-            const tempCell = document.createElement('td');
-            tempCell.textContent = day.temp;
-            row.appendChild(tempCell);
-
-            const humidityCell = document.createElement('td');
-            humidityCell.textContent = day.humidity;
-            row.appendChild(humidityCell);
-
-            const conditionsCell = document.createElement('td');
-            conditionsCell.textContent = day.conditions;
-            row.appendChild(conditionsCell);
-
-            weatherTable.appendChild(row);
-          });
-        })
-        .catch(error => {
-          console.error('Error fetching weather data:', error);
-        });
-    }
-
-    fetchWeatherData();
-  </script>
+  <script src="weather.js"></script>
 </body>
 </html>
