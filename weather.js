@@ -61,8 +61,20 @@ function fetchForecastHourly(url) {
     });
 }
 
-navigator.geolocation.getCurrentPosition(success, error, {
-  enableHighAccuracy: true,
-  timeout: 5000,
-  maximumAge: 0,
-});
+function promptForLocation() {
+  const locationPrompt = document.getElementById('location-prompt');
+  const enableButton = document.getElementById('enable-button');
+
+  enableButton.addEventListener('click', () => {
+    locationPrompt.style.display = 'none';
+    navigator.geolocation.getCurrentPosition(success, error, {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0,
+    });
+  });
+
+  locationPrompt.style.display = 'block';
+}
+
+document.addEventListener('DOMContentLoaded', promptForLocation);
