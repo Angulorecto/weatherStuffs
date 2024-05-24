@@ -9,7 +9,7 @@ function success(pos) {
 
 function error(err) {
   console.warn(`ERROR(${err.code}): ${err.message}`);
-  promptForLocation();
+  promptForManualLocation();
 }
 
 function fetchWeatherData() {
@@ -76,6 +76,11 @@ function promptForLocation() {
   });
 
   locationPrompt.style.display = 'block';
+}
+
+function promptForManualLocation() {
+  const manualLocationPrompt = document.getElementById('manual-location-prompt');
+  manualLocationPrompt.style.display = 'block';
 }
 
 document.addEventListener('DOMContentLoaded', () => {
