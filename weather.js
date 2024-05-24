@@ -66,5 +66,3 @@ navigator.geolocation.getCurrentPosition(success, error, {
   timeout: 5000,
   maximumAge: 0,
 });
-
-document.addEventListener("DOMContentLoaded", fetchWeatherData);
