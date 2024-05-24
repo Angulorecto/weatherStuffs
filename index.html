@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weather Forecast</title>
+  <style>
+    #weather-table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    #weather-table th, #weather-table td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <table id="weather-table">
+    <thead>
+      <tr>
+        <th>Day</th>
+        <th>Temperature</th>
+        <th>Humidity</th>
+        <th>Conditions</th>
+      </tr>
+    </thead>
+    <tbody id="weather-body">
+    </tbody>
+  </table>
+
+  <script>
+    // Function to fetch the weather data and update the table
+    function fetchWeatherData() {
+      let coords = navigator.geolocation.getCurrentPosition();
+      alert(coords);
+      const url = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/USER_COORDS?key=88DCRTFD8WZZDKLG5QWS8DQV9';
+
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          const days = data.days.slice(0, 7); // Get the first 7 days
+
+          const weatherTable = document.getElementById('weather-body');
+
+          days.forEach(day => {
+            const row = document.createElement('tr');
+
+            const dayCell = document.createElement('td');
+            dayCell.textContent = day.datetime;
+            row.appendChild(dayCell);
+
+            const tempCell = document.createElement('td');
+            tempCell.textContent = day.temp;
+            row.appendChild(tempCell);
+
+            const humidityCell = document.createElement('td');
+            humidityCell.textContent = day.humidity;
+            row.appendChild(humidityCell);
+
+            const conditionsCell = document.createElement('td');
+            conditionsCell.textContent = day.conditions;
+            row.appendChild(conditionsCell);
+
+            weatherTable.appendChild(row);
+          });
+        })
+        .catch(error => {
+          console.error('Error fetching weather data:', error);
+        });
+    }
+
+    // Call the fetchWeatherData function when the page loads
+    window.addEventListener('load', fetchWeatherData);
+  </script>
+</body>
+</html>
