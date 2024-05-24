@@ -17,7 +17,8 @@
       background-color: #f2f2f2;
     }
 
-    #location-prompt {
+    #location-prompt,
+    #manual-location-prompt {
       display: none;
       text-align: center;
       margin: 20px;
@@ -33,6 +34,11 @@
   <div id="location-prompt">
     <p>This website requires access to your location to fetch the weather forecast.</p>
     <button id="enable-button">Enable Location</button>
+  </div>
+
+  <div id="manual-location-prompt">
+    <p>Location access is required to fetch the weather forecast.</p>
+    <p>Please enable location access manually through your browser settings.</p>
   </div>
 
   <h2>Hourly Forecast</h2>
