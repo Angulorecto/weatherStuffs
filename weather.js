@@ -77,3 +77,11 @@ function promptForLocation() {
 
   locationPrompt.style.display = 'block';
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  navigator.geolocation.getCurrentPosition(success, error, {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0,
+  });
+});
