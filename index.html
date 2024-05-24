@@ -1,32 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Weather Forecast</title>
+  <title>Hourly Weather Forecast</title>
   <style>
-    #weather-table {
+    table {
       border-collapse: collapse;
       width: 100%;
     }
-    #weather-table th, #weather-table td {
-      border: 1px solid black;
-      padding: 8px;
+
+    th, td {
       text-align: left;
+      padding: 8px;
+    }
+
+    th {
+      background-color: #f2f2f2;
     }
   </style>
 </head>
 <body>
-  <table id="weather-table">
+  <h1>Hourly Weather Forecast</h1>
+
+  <h2>Current Location</h2>
+  <p id="location"></p>
+
+  <h2>Hourly Forecast</h2>
+  <table>
     <thead>
       <tr>
-        <th>Day</th>
+        <th>Time</th>
         <th>Temperature</th>
         <th>Humidity</th>
         <th>Conditions</th>
       </tr>
     </thead>
-    <tbody id="weather-body">
-    </tbody>
+    <tbody id="hourly-forecast"></tbody>
   </table>
+
   <script src="weather.js"></script>
 </body>
 </html>
