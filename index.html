@@ -16,6 +16,12 @@
     th {
       background-color: #f2f2f2;
     }
+
+    #location-prompt {
+      display: none;
+      text-align: center;
+      margin: 20px;
+    }
   </style>
 </head>
 <body>
@@ -23,6 +29,11 @@
 
   <h2>Current Location</h2>
   <p id="location"></p>
+
+  <div id="location-prompt">
+    <p>This website requires access to your location to fetch the weather forecast.</p>
+    <button id="enable-button">Enable Location</button>
+  </div>
 
   <h2>Hourly Forecast</h2>
   <table>
