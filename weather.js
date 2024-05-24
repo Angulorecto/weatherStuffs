@@ -12,28 +12,52 @@ function error(err) {
 }
 
 function fetchWeatherData() {
-  const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${lat},${lon}?key=88DCRTFD8WZZDKLG5QWS8DQV9`;
+  const url = `https://api.weather.gov/points/${lat},${lon}`;
 
   fetch(url)
     .then(response => response.json())
     .then(data => {
-      const days = data.days.slice(0, 7);
-      const weatherTable = document.getElementById('weather-body');
+      const forecastHourlyUrl = data.properties.forecastHourly;
 
-      days.forEach(day => {
-        const row = document.createElement('tr');
-
-        ['datetime', 'temp', 'humidity', 'conditions'].forEach(prop => {
-          const cell = document.createElement('td');
-          cell.textContent = day[prop];
-          row.appendChild(cell);
-        });
-
-        weatherTable.appendChild(row);
-      });
+      fetchForecastHourly(forecastHourlyUrl);
     })
     .catch(error => {
       console.error('Error fetching weather data:', error);
+    });
+}
+
+function fetchForecastHourly(url) {
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      const periods = data.properties.periods.slice(0, 10);
+
+      const hourlyTable = document.getElementById('hourly-forecast');
+
+      periods.forEach(period => {
+        const row = document.createElement('tr');
+
+        const startTimeCell = document.createElement('td');
+        startTimeCell.textContent = period.startTime;
+        row.appendChild(startTimeCell);
+
+        const tempCell = document.createElement('td');
+        tempCell.textContent = period.temperature + ' ' + period.temperatureUnit;
+        row.appendChild(tempCell);
+
+        const humidityCell = document.createElement('td');
+        humidityCell.textContent = period.relativeHumidity + '%';
+        row.appendChild(humidityCell);
+
+        const conditionsCell = document.createElement('td');
+        conditionsCell.textContent = period.shortForecast;
+        row.appendChild(conditionsCell);
+
+        hourlyTable.appendChild(row);
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching forecastHourly data:', error);
     });
 }
 
@@ -43,4 +67,4 @@ navigator.geolocation.getCurrentPosition(success, error, {
   maximumAge: 0,
 });
 
-document.addEventListener("DONContentLoaded", fetchWeatherData);
+document.addEventListener("DOMContentLoaded", fetchWeatherData);
