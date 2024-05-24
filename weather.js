@@ -46,7 +46,7 @@ function fetchForecastHourly(url) {
         row.appendChild(tempCell);
 
         const humidityCell = document.createElement('td');
-        humidityCell.textContent = period.relativeHumidity + '%';
+        humidityCell.textContent = period.relativeHumidity.value + '%';
         row.appendChild(humidityCell);
 
         const conditionsCell = document.createElement('td');
