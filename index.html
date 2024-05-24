@@ -32,7 +32,7 @@
     // Function to fetch the weather data and update the table
     function fetchWeatherData() {
       let coords = navigator.geolocation.getCurrentPosition();
-      alert(coords);
+      document.createElement('p').innerHTML = coords;
       const url = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/USER_COORDS?key=88DCRTFD8WZZDKLG5QWS8DQV9';
 
       fetch(url)
@@ -70,7 +70,7 @@
     }
 
     // Call the fetchWeatherData function when the page loads
-    window.addEventListener('load', fetchWeatherData);
+    window.addEventListener('DOMContentLoaded', fetchWeatherData);
   </script>
 </body>
 </html>
