@@ -29,10 +29,31 @@
   </table>
 
   <script>
+    const options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0,
+    };
+
+    function success(pos) {
+      const crd = pos.coords;
+      const p = document.createElement('p');
+      p.innerHTML = `${crd.latitude},${crd.longitude}`;
+      document.getElementByTagName('body')[0].appendChild(p);
+      
+      console.log("Your current position is:");
+      console.log(`Latitude : ${crd.latitude}`);
+      console.log(`Longitude: ${crd.longitude}`);
+      console.log(`More or less ${crd.accuracy} meters.`);
+    }
+
+    function error(err) {
+      console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
+
     // Function to fetch the weather data and update the table
     function fetchWeatherData() {
-      let coords = navigator.geolocation.getCurrentPosition();
-      document.createElement('p').innerHTML = coords;
+      navigator.geolocation.getCurrentPosition(success, error, options);
       const url = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/USER_COORDS?key=88DCRTFD8WZZDKLG5QWS8DQV9';
 
       fetch(url)
