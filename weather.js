@@ -9,6 +9,7 @@ function success(pos) {
 
 function error(err) {
   console.warn(`ERROR(${err.code}): ${err.message}`);
+  promptForLocation();
 }
 
 function fetchWeatherData() {
@@ -76,5 +77,3 @@ function promptForLocation() {
 
   locationPrompt.style.display = 'block';
 }
-
-document.addEventListener('DOMContentLoaded', promptForLocation);
