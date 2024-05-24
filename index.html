@@ -39,7 +39,7 @@
       const crd = pos.coords;
       const p = document.createElement('p');
       p.innerHTML = `${crd.latitude},${crd.longitude}`;
-      document.getElementByTagName('body')[0].appendChild(p);
+      document.body.appendChild(p);
       
       console.log("Your current position is:");
       console.log(`Latitude : ${crd.latitude}`);
