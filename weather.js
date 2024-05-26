@@ -33,28 +33,13 @@ function fetchForecastHourly(url) {
     .then(data => {
       const periods = data.properties.periods.slice(0, 10);
 
-      const hourlyTable = document.getElementById('hourly-forecast');
+      const timeCard = document.getElementsByClassName('glassy-div')[0];
 
       periods.forEach(period => {
-        const row = document.createElement('tr');
-
-        const startTimeCell = document.createElement('td');
+        const startTimeCell = document.createElement('div');
         startTimeCell.textContent = period.startTime;
-        row.appendChild(startTimeCell);
-
-        const tempCell = document.createElement('td');
-        tempCell.textContent = period.temperature + ' ' + period.temperatureUnit;
-        row.appendChild(tempCell);
-
-        const humidityCell = document.createElement('td');
-        humidityCell.textContent = period.relativeHumidity.value + '%';
-        row.appendChild(humidityCell);
-
-        const conditionsCell = document.createElement('td');
-        conditionsCell.textContent = period.shortForecast;
-        row.appendChild(conditionsCell);
-
-        hourlyTable.appendChild(row);
+        startTimeCell.className = "timeSlot";
+        timeCard.appendChild(startTimeCell);
       });
     })
     .catch(error => {
