@@ -1,59 +1,87 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Hourly Weather Forecast</title>
-  <style>
-    table {
-      border-collapse: collapse;
-      width: 100%;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Three.js Sky with Moving Clouds</title>
+<style>
+    body {
+        margin: 0;
+        overflow: hidden;
+        font-family: Arial, sans-serif;
     }
-
-    th, td {
-      text-align: left;
-      padding: 8px;
+    canvas {
+        display: block;
     }
-
-    th {
-      background-color: #f2f2f2;
+    .glassy-div {
+      position: absolute;
+      top: 54%;
+      left: 12%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      border-radius: 16px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0px 20px 2px rgb(0 0 0 / 10%);
+      color: #333;
+      width: 15%;
+      height: 68%;
     }
-
-    #location-prompt,
-    #manual-location-prompt {
-      display: none;
-      text-align: center;
-      margin: 20px;
-    }
-  </style>
+</style>
 </head>
 <body>
-  <h1>Hourly Weather Forecast</h1>
+<div class="glassy-div">
+    This is a glassy div
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
 
-  <h2>Current Location</h2>
-  <p id="location"></p>
+    const canvas = document.createElement('canvas');
+    canvas.width = 256;
+    canvas.height = 256;
+    const context = canvas.getContext('2d');
+    const gradient = context.createLinearGradient(0, 0, 0, 256);
+    gradient.addColorStop(0, '#87CEEB');
+    gradient.addColorStop(1, '#1E90FF');
+    context.fillStyle = gradient;
+    context.fillRect(0, 0, 256, 256);
+    const backgroundTexture = new THREE.CanvasTexture(canvas);
+    scene.background = backgroundTexture;
 
-  <div id="location-prompt">
-    <p>This website requires access to your location to fetch the weather forecast.</p>
-    <button id="enable-button">Enable Location</button>
-  </div>
+    const cloudTexture = new THREE.TextureLoader().load('https://static.vecteezy.com/system/resources/thumbnails/012/595/172/small_2x/realistic-white-cloud-png.png');
+    const cloudMaterial = new THREE.MeshBasicMaterial({ map: cloudTexture, transparent: true, opacity: 0.8 });
 
-  <div id="manual-location-prompt">
-    <p>Location access is required to fetch the weather forecast.</p>
-    <p>Please enable location access manually through your browser settings.</p>
-  </div>
+    const clouds = [];
+    for (let i = 0; i < 5; i++) {
+        const cloudGeometry = new THREE.PlaneGeometry(200, 200);
+        const cloud = new THREE.Mesh(cloudGeometry, cloudMaterial);
+        cloud.position.set(Math.random() * 200 - 100, Math.random() * 100 - 50, Math.random() * -200);
+        cloud.rotation.z = Math.random() * Math.PI * 2;
+        cloud.speed = Math.random() * 0.02 + 0.005; // Random speed between 0.005 and 0.025
+        scene.add(cloud);
+        clouds.push(cloud);
+    }
 
-  <h2>Hourly Forecast</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Time</th>
-        <th>Temperature</th>
-        <th>Humidity</th>
-        <th>Conditions</th>
-      </tr>
-    </thead>
-    <tbody id="hourly-forecast"></tbody>
-  </table>
+    camera.position.z = 50;
 
-  <script src="weather.js"></script>
+    function animate() {
+        requestAnimationFrame(animate);
+
+        clouds.forEach(cloud => {
+            cloud.position.x += cloud.speed;
+            if (cloud.position.x > 100) {
+                cloud.position.x = -100;
+            }
+            cloud.rotation.z += cloud.speed * .05;
+        });
+
+        renderer.render(scene, camera);
+    }
+    animate();
+</script>
 </body>
 </html>
