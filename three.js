@@ -162,5 +162,5 @@ document.addEventListener("DOMContentLoaded", function() {
         maximumAge: 0,
     });
     
-    generateSky();
+    generateSky(25, 0.002, '#8D95AD', '#6E738E');
 });
