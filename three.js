@@ -29,9 +29,9 @@ document.addEventListener("DOMContentLoaded", function() {
     for (let i = 0; i < 20; i++) {
         const cloudGeometry = new THREE.PlaneGeometry(200, 200);
         const cloud = new THREE.Mesh(cloudGeometry, cloudMaterial);
-        cloud.position.set(Math.random() * (Math.rendom() * 100) - 100, Math.random() * 100 - 50, Math.random() * -200);
+        cloud.position.set(Math.random() * 200 - 100, Math.random() * 100 - 50, Math.random() * -200);
         cloud.rotation.z = Math.random() * Math.PI * 2;
-        cloud.speed = Math.random() * Math.rendom() + 0.005; // Random speed between 0.005 and 0.025
+        cloud.speed = Math.random() * 0.02 + 0.005; // Random speed between 0.005 and 0.025
         scene.add(cloud);
         clouds.push(cloud);
     }
