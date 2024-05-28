@@ -206,13 +206,15 @@ document.addEventListener("DOMContentLoaded", function() {
         timeout: 5000,
         maximumAge: 0,
     });
-    if (shortDesc == "Isolated Showers And Thunderstorms") {
+    if (shortDesc != "") { 
+      if (shortDesc == "Isolated Showers And Thunderstorms") {
         generateSky(25, 0.002, '#8D95AD', '#6E738E', 0x404040, 0.7);
-    } else if (shortDesc == "Scattered Showers And Thunderstorms") {
+      } else if (shortDesc == "Scattered Showers And Thunderstorms") {
         generateSky(10, 0.0001, '#8D95AD', '#6E738E', 0x808080, 0.7);
-    } else if (shortDesc == "Chance Showers And Thunderstorms") {
+      } else if (shortDesc == "Chance Showers And Thunderstorms") {
         generateSky(5, 0.000, '#5DACC1', '#4A7580', 0xDEDEDE, 1);
-    } else if (shortDesc == "Partly Sunny") {
+      } else if (shortDesc == "Partly Sunny") {
         generateSky(5, 0.000, '#5DACC1', '#4A7580', 0xDEDEDE, 1);
+      }
     }
 });
