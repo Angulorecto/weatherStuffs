@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const cloud = new THREE.Mesh(cloudGeometry, cloudMaterial);
         cloud.position.set(Math.random() * 200 - 100, Math.random() * 100 - 50, Math.random() * -200);
         cloud.rotation.z = Math.random() * Math.PI * 2;
-        cloud.speed = Math.random() * (Math.random() - (Math.random() + 0.2)) + 0.005; // Random speed between 0.005 and 0.025
+        cloud.speed = Math.random() * (Math.random() - (Math.random() + 0.4)) + 0.005; // Random speed between 0.005 and 0.025
         scene.add(cloud);
         clouds.push(cloud);
     }
