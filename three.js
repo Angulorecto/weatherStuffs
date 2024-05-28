@@ -212,5 +212,7 @@ document.addEventListener("DOMContentLoaded", function() {
         generateSky(10, 0.0001, '#8D95AD', '#6E738E', 0x808080, 0.7);
     } else if (shortDesc == "Chance Showers And Thunderstorms") {
         generateSky(5, 0.000, '#5DACC1', '#4A7580', 0xDEDEDE, 1);
+    } else if (shortDesc == "Partly Sunny") {
+        generateSky(5, 0.000, '#5DACC1', '#4A7580', 0xDEDEDE, 1);
     }
 });
