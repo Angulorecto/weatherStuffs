@@ -10,14 +10,14 @@ document.addEventListener("DOMContentLoaded", function() {
     canvas.height = 256;
     const context = canvas.getContext('2d');
     const gradient = context.createLinearGradient(0, 0, 0, 256);
-    gradient.addColorStop(0, '#87CEEB');
-    gradient.addColorStop(1, '#1E90FF');
+    gradient.addColorStop(0, '#8D95AD');
+    gradient.addColorStop(1, '#6E738E');
     context.fillStyle = gradient;
     context.fillRect(0, 0, 256, 256);
     const backgroundTexture = new THREE.CanvasTexture(canvas);
     scene.background = backgroundTexture;
 
-    const cloudTexture = new THREE.TextureLoader().load('https://static.vecteezy.com/system/resources/thumbnails/012/595/172/small_2x/realistic-white-cloud-png.png');
+    const cloudTexture = new THREE.TextureLoader().load('realistic-white-cloud-png.webp');
     const cloudMaterial = new THREE.MeshBasicMaterial({
         map: cloudTexture,
         transparent: true,
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     const clouds = [];
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 20; i++) {
         const cloudGeometry = new THREE.PlaneGeometry(200, 200);
         const cloud = new THREE.Mesh(cloudGeometry, cloudMaterial);
         cloud.position.set(Math.random() * 200 - 100, Math.random() * 100 - 50, Math.random() * -200);
