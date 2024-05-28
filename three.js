@@ -14,6 +14,18 @@ function generateRaindrop() {
   return raindrop;
 }
 
+function sky() {
+  if (shortDesc == "Isolated Showers And Thunderstorms") {
+    generateSky(25, 0.002, '#8D95AD', '#6E738E', 0x404040, 0.7);
+  } else if (shortDesc == "Scattered Showers And Thunderstorms") {
+    generateSky(10, 0.0001, '#8D95AD', '#6E738E', 0x808080, 0.7);
+  } else if (shortDesc == "Chance Showers And Thunderstorms") {
+    generateSky(5, 0.000, '#5DACC1', '#4A7580', 0xDEDEDE, 1);
+  } else if (shortDesc == "Partly Sunny") {
+    generateSky(5, 0.000, '#5DACC1', '#4A7580', 0xDEDEDE, 1);
+  }
+}
+
 function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity) {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -216,5 +228,7 @@ document.addEventListener("DOMContentLoaded", function() {
       } else if (shortDesc == "Partly Sunny") {
         generateSky(5, 0.000, '#5DACC1', '#4A7580', 0xDEDEDE, 1);
       }
+    } else {
+      setTimeout(sky, 500);
     }
 });
