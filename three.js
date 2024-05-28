@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
             cloud.rotation.z += cloud.speed * .01;
 
-            if (Math.random() < 0.1) { // Random chance for lightning
+            if (Math.random() < 0.002) { // Random chance for lightning
                 cloud.material.opacity = 1;
                 setTimeout(() => {
                     cloud.material.opacity = Math.random() + 0.3;
