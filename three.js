@@ -160,6 +160,6 @@ document.addEventListener("DOMContentLoaded", function() {
     } else if (shortDesc == "Scattered Showers And Thunderstorms") {
         generateSky(5, 0.000, '#8D95AD', '#6E738E', 0x808080, 0.7);
     } else {
-        generateSky(5, 0.000, '#0000FF', '#FF0000', 0xFFFFFF, 1);
+        generateSky(5, 0.000, '#87CEEB', '#1E90FF', 0xFFFFFF, 1);
     }
 });
