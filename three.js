@@ -1,4 +1,18 @@
 let lat, lon, shortDesc;
+let raindrops = [];
+
+function generateRaindrop() {
+  const raindropGeometry = new THREE.PlaneGeometry(2, 20);
+  const raindropMaterial = new THREE.MeshBasicMaterial({
+    color: 0x66ccff, // Blue color for raindrops
+    transparent: true,
+  });
+  const raindrop = new THREE.Mesh(raindropGeometry, raindropMaterial);
+  raindrop.position.set(Math.random() * 100 - 50, Math.random() * 50, Math.random() * -200);
+  raindrop.speed = Math.random() * 0.5 + 0.5; // Random speed between 0.5 and 1
+  raindrop.falling = true; // Flag to indicate if the raindrop is falling
+  return raindrop;
+}
 
 function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity) {
     const scene = new THREE.Scene();
@@ -34,6 +48,11 @@ function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity) {
         scene.add(cloud);
         clouds.push(cloud);
     }
+    for (let i = 0; i < 1000; i++) {
+        const raindrop = generateRaindrop();
+        scene.add(raindrop);
+        raindrops.push(raindrop);
+    }
     camera.position.z = 50;
     function animate() {
         requestAnimationFrame(animate);
@@ -49,6 +68,38 @@ function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity) {
                     cloud.material.opacity = Math.random() + 0.3;
                 }, 50); // Duration of the lightning flash
             }
+
+            raindrops.forEach(raindrop => {
+                if (raindrop.falling) {
+                    raindrop.position.y -= raindrop.speed;
+
+                    // Check for collision with elements
+                    const raindropRect = raindrop.getBoundingClientRect();
+                    const elements = document.getElementsByClassName('rainAffected'); // Replace 'element-class' with the class name of your desired elements
+
+                    for (let i = 0; i < elements.length; i++) {
+                      const element = elements[i];
+                      const elementRect = element.getBoundingClientRect();
+
+                      if (
+                        raindropRect.left < elementRect.right &&
+                        raindropRect.right > elementRect.left &&
+                        raindropRect.top < elementRect.bottom &&
+                        raindropRect.bottom > elementRect.top
+                      ) {
+                        // Collision detected, stop the raindrop from falling
+                        raindrop.falling = false;
+                        // Add your desired interaction here (e.g., create a splash effect)
+                        element.classList.add('splash'); // Create a CSS class 'splash' to style the interaction
+                      }
+                    }
+
+                    // Reset raindrop position if it falls off the screen
+                    if (raindrop.position.y < -50) {
+                      raindrop.position.y = 50;
+                    }
+                }
+            });
         });
         renderer.render(scene, camera);
     }
