@@ -1,6 +1,6 @@
 let lat, lon, shortDesc;
 
-function generateSky(cloudsCount, lightningRate, bg1, bg2) {
+function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity) {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer();
@@ -21,8 +21,8 @@ function generateSky(cloudsCount, lightningRate, bg1, bg2) {
     const cloudMaterial = new THREE.MeshBasicMaterial({
         map: cloudTexture,
         transparent: true,
-        opacity: 0.7,
-        color: 0x404040 // Black tint
+        opacity: opacity,
+        color: tint // Black tint
     });
     const clouds = [];
     for (let i = 0; i < cloudsCount; i++) {
@@ -156,8 +156,10 @@ document.addEventListener("DOMContentLoaded", function() {
         maximumAge: 0,
     });
     if (shortDesc == "Isolated Showers And Thunderstorms") {
-        generateSky(25, 0.002, '#8D95AD', '#6E738E');
+        generateSky(25, 0.002, '#8D95AD', '#6E738E', 0x404040, 0.7);
     } else if (shortDesc == "Scattered Showers And Thunderstorms") {
-        generateSky(5, 0.000, '#0000FF', '#FF0000')
+        generateSky(5, 0.000, '#8D95AD', '#6E738E', 0x808080, 0.7);
+    } else {
+        generateSky(5, 0.000, '#0000FF', '#FF0000', 0xFFFFFF, 1);
     }
 });
