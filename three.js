@@ -161,6 +161,9 @@ document.addEventListener("DOMContentLoaded", function() {
         timeout: 5000,
         maximumAge: 0,
     });
-    
-    generateSky(25, 0.002, '#8D95AD', '#6E738E');
+    if (shortDesc == "Isolated Showers And Thunderstorms") or (shortDesc == "Scattered Showers And Thunderstorms") {
+        generateSky(25, 0.002, '#8D95AD', '#6E738E');
+    } else {
+        generateSky(5, 0.000, '#0000FF', '#FF0000')
+    }
 });
