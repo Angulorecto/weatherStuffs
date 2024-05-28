@@ -26,7 +26,7 @@ function sky() {
   }
 }
 
-function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity) {
+function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity, needSun) {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer();
@@ -43,6 +43,7 @@ function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity) {
     context.fillRect(0, 0, 256, 256);
     const backgroundTexture = new THREE.CanvasTexture(canvas);
     scene.background = backgroundTexture;
+    let sun;
     const cloudTexture = new THREE.TextureLoader().load('realistic-white-cloud-png.webp');
     const cloudMaterial = new THREE.MeshBasicMaterial({
         map: cloudTexture,
@@ -66,6 +67,18 @@ function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity) {
         raindrops.push(raindrop);
     }
     camera.position.z = 50;
+
+    if (needSun == true) {
+      const sunGeometry = new THREE.SphereGeometry(5, 32, 32);
+      const sunMaterial = new THREE.MeshPhongMaterial({
+        emissive: 0xfdb813, // Set the emissive color to a bright yellow
+        emissiveIntensity: 1, // Set the emissive intensity to full
+      });
+      const sunG = new THREE.Mesh(geometry, material);
+      scene.add(sunG);
+      sun = sunG;
+    }
+  
     function animate() {
         requestAnimationFrame(animate);
         clouds.forEach(cloud => {
@@ -79,6 +92,10 @@ function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity) {
                 setTimeout(() => {
                     cloud.material.opacity = Math.random() + 0.3;
                 }, 50); // Duration of the lightning flash
+            }
+
+            if (needSun == true) {
+              sun.rotation.y += 0.01; // Rotate the sun
             }
 
             raindrops.forEach(raindrop => {
