@@ -51,7 +51,7 @@ d document.addEventListener("DOMContentLoaded", function() {
             if (Math.random() < 0.002) { // Random chance for lightning
                 cloud.material.opacity = 1;
                 setTimeout(() => {
-                    cloud.material.opacity = Math.random() + 0.3;
+                    cloud.material.opacity = Math.random() + 0.4;
                 }, 50); // Duration of the lightning flash
             }
         });
