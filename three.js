@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 cloud.material.opacity = 1;
                 setTimeout(() => {
                     cloud.material.opacity = Math.random() + 0.3;
-                }, 100); // Duration of the lightning flash
+                }, 50); // Duration of the lightning flash
             }
         });
 
