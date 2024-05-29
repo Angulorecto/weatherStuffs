@@ -4,20 +4,20 @@ let skyPack = false;
 function sky() {
   if (skyPack == false) {
     if (shortDesc == "Isolated Showers And Thunderstorms") {
-      generateSky(25, 0.002, '#8D95AD', '#6E738E', 0x404040, 0.7);
+      generateSky(25, 0.002, '#8D95AD', '#6E738E', 0x404040, 0.7, 7);
     } else if (shortDesc == "Scattered Showers And Thunderstorms") {
-      generateSky(20, 0.001, '#8D95AD', '#6E738E', 0x808080, 0.7);
+      generateSky(20, 0.001, '#8D95AD', '#6E738E', 0x808080, 0.7, 7);
     } else if (shortDesc == "Chance Showers And Thunderstorms") {
-      generateSky(15, 0.000, '#87CEEB', '#1E90FF', 0xCCCCCC, 1);
+      generateSky(15, 0.000, '#87CEEB', '#1E90FF', 0xCCCCCC, 1, 4);
     } else if (shortDesc == "Partly Sunny") {
-      generateSky(10, 0.000, '#8D95AD', '#6E738E', 0xFFFFFF, 1);
+      generateSky(10, 0.000, '#8D95AD', '#6E738E', 0xFFFFFF, 1, 2);
     } else if (shortDesc == "Mostly Sunny") {
-      generateSky(1, 0.000, '#0091F6', '#56CDF7', 0xFFFFFF, 1);
+      generateSky(1, 0.000, '#0091F6', '#56CDF7', 0xFFFFFF, 1, 2);
     }
   }
 }
 
-function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity) {
+function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity, windFactor) {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer();
@@ -56,7 +56,7 @@ function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity) {
     function animate() {
         requestAnimationFrame(animate);
         clouds.forEach(cloud => {
-            cloud.position.x += cloud.speed * 3;
+            cloud.position.x += cloud.speed * windFactor;
             if (cloud.position.x > 100) {
                 cloud.position.x = -100;
             }
