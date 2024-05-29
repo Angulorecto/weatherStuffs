@@ -177,10 +177,14 @@ function promptForLocation() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+  try {
     navigator.geolocation.getCurrentPosition(success, error, {
         enableHighAccuracy: true,
         timeout: 5000,
         maximumAge: 0,
     });
+  } catch (error) {
+    alert(error);
+  }
     setInterval(sky, 500);
 });
