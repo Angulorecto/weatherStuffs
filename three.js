@@ -99,6 +99,7 @@ function success(pos) {
 
 function error(err) {
   console.warn(`ERROR(${err.code}): ${err.message}`);
+  alert(`ERROR(${err.code}): ${err.message}`);
 }
 
 function fetchWeatherData() {
