@@ -10,16 +10,40 @@ canvas {
     position: absolute;
     display: flex;
     flex-wrap: wrap;
-    top: 8%;
-    left: 4%;
     padding: 20px;
     border-radius: 16px;
     backdrop-filter: blur(8px);
     box-shadow: 0 0px 20px 2px rgb(0 0 0 / 10%);
     color: #333;
-    width: 53%;
-    height: 68%;
     background-color: rgba(255, 255, 255, 5%);
+}
+.currentTemp {
+    top: 12%;
+    left: 4%;
+    width: 8vw;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: absolute; /* Ensure it's positioned correctly */
+    background-color: rgba(255, 255, 255, 0.1); /* Example background for visibility */
+}
+
+.currentTempTemp {
+    margin: unset;
+    font-size: 410%;
+}
+
+.currentTempExtension {
+    margin-top: unset;
+    font-size: 210%;
+}
+.dataList {
+    left: 16%;
+    top: 12%;
+    width: 75%;
+    height: 80%;
 }
 .timeSlot {
     display: flex;
@@ -35,4 +59,9 @@ canvas {
     text-align: center;
     font-size: 150%;
     color: black;
+}
+
+.timeTitle {
+    position: absolute;
+    left: 4.5%;
 }

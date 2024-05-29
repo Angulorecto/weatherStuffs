@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <link rel="stylesheet" href="style.css">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Local weather</title>
-</head>
-<body>
-  <div class="glassy-div rainAffected"></div>
+  <head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local weather</title>
+  </head>
+  <body>
+    <h1 class="timeTitle"></h1>
+    <div class="glassy-div rainAffected dataList">
+      <div class="timeSlot"><div>Time</div><div>Temp</div><div>Humidity</div></div>
+    </div>
+    <div class="glassy-div rainAffected currentTemp">
+      <h1 class="currentTempTemp"></h1>
+      <h1 class="currentTempExtension"></h1>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="three.js"></script>
   </body>

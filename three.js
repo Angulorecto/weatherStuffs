@@ -1,32 +1,21 @@
 let lat, lon, shortDesc;
-let raindrops = [];
-
-function generateRaindrop() {
-  const raindropGeometry = new THREE.PlaneGeometry(2, 20);
-  const raindropMaterial = new THREE.MeshBasicMaterial({
-    color: 0x66ccff, // Blue color for raindrops
-    transparent: true,
-  });
-  const raindrop = new THREE.Mesh(raindropGeometry, raindropMaterial);
-  raindrop.position.set(Math.random() * 100 - 50, Math.random() * 50, Math.random() * -200);
-  raindrop.speed = Math.random() * 0.5 + 0.5; // Random speed between 0.5 and 1
-  raindrop.falling = true; // Flag to indicate if the raindrop is falling
-  return raindrop;
-}
+let skyPack = false;
 
 function sky() {
-  if (shortDesc == "Isolated Showers And Thunderstorms") {
-    generateSky(25, 0.002, '#8D95AD', '#6E738E', 0x404040, 0.7);
-  } else if (shortDesc == "Scattered Showers And Thunderstorms") {
-    generateSky(10, 0.0001, '#8D95AD', '#6E738E', 0x808080, 0.7);
-  } else if (shortDesc == "Chance Showers And Thunderstorms") {
-    generateSky(5, 0.000, '#5DACC1', '#4A7580', 0xDEDEDE, 1);
-  } else if (shortDesc == "Partly Sunny") {
-    generateSky(5, 0.000, '#5DACC1', '#4A7580', 0xDEDEDE, 1);
+  if (skyPack == false) {
+    if (shortDesc == "Isolated Showers And Thunderstorms") {
+      generateSky(25, 0.002, '#8D95AD', '#6E738E', 0x404040, 0.7);
+    } else if (shortDesc == "Scattered Showers And Thunderstorms") {
+      generateSky(20, 0.001, '#8D95AD', '#6E738E', 0x808080, 0.7);
+    } else if (shortDesc == "Chance Showers And Thunderstorms") {
+      generateSky(15, 0.000, '#87CEEB', '#1E90FF', 0xCCCCCC, 1);
+    } else if (shortDesc == "Partly Sunny") {
+      generateSky(10, 0.000, '#76989D', '#2F555B', 0xBCBCBC, 1);
+    }
   }
 }
 
-function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity, needSun) {
+function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity) {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer();
@@ -43,7 +32,6 @@ function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity, needSu
     context.fillRect(0, 0, 256, 256);
     const backgroundTexture = new THREE.CanvasTexture(canvas);
     scene.background = backgroundTexture;
-    let sun;
     const cloudTexture = new THREE.TextureLoader().load('realistic-white-cloud-png.webp');
     const cloudMaterial = new THREE.MeshBasicMaterial({
         map: cloudTexture,
@@ -61,23 +49,7 @@ function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity, needSu
         scene.add(cloud);
         clouds.push(cloud);
     }
-    for (let i = 0; i < 1000; i++) {
-        const raindrop = generateRaindrop();
-        scene.add(raindrop);
-        raindrops.push(raindrop);
-    }
     camera.position.z = 50;
-
-    if (needSun == true) {
-      const sunGeometry = new THREE.SphereGeometry(5, 32, 32);
-      const sunMaterial = new THREE.MeshPhongMaterial({
-        emissive: 0xfdb813, // Set the emissive color to a bright yellow
-        emissiveIntensity: 1, // Set the emissive intensity to full
-      });
-      const sunG = new THREE.Mesh(geometry, material);
-      scene.add(sunG);
-      sun = sunG;
-    }
   
     function animate() {
         requestAnimationFrame(animate);
@@ -93,46 +65,11 @@ function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity, needSu
                     cloud.material.opacity = Math.random() + 0.3;
                 }, 50); // Duration of the lightning flash
             }
-
-            if (needSun == true) {
-              sun.rotation.y += 0.01; // Rotate the sun
-            }
-
-            raindrops.forEach(raindrop => {
-                if (raindrop.falling) {
-                    raindrop.position.y -= raindrop.speed;
-
-                    // Check for collision with elements
-                    const raindropRect = raindrop.getBoundingClientRect();
-                    const elements = document.getElementsByClassName('rainAffected'); // Replace 'element-class' with the class name of your desired elements
-
-                    for (let i = 0; i < elements.length; i++) {
-                      const element = elements[i];
-                      const elementRect = element.getBoundingClientRect();
-
-                      if (
-                        raindropRect.left < elementRect.right &&
-                        raindropRect.right > elementRect.left &&
-                        raindropRect.top < elementRect.bottom &&
-                        raindropRect.bottom > elementRect.top
-                      ) {
-                        // Collision detected, stop the raindrop from falling
-                        raindrop.falling = false;
-                        // Add your desired interaction here (e.g., create a splash effect)
-                        element.classList.add('splash'); // Create a CSS class 'splash' to style the interaction
-                      }
-                    }
-
-                    // Reset raindrop position if it falls off the screen
-                    if (raindrop.position.y < -50) {
-                      raindrop.position.y = 50;
-                    }
-                }
-            });
         });
         renderer.render(scene, camera);
     }
     animate();
+    skyPack = true;
 }
 
 function reformatDate(dateString) {
@@ -179,6 +116,11 @@ function fetchWeatherData() {
     });
 }
 
+function getUserLocalTime() {
+  const now = new Date();
+  return now.toLocaleTimeString(); // Returns a string representing the current time
+}
+
 function fetchForecastHourly(url) {
   fetch(url)
     .then(response => response.json())
@@ -186,9 +128,13 @@ function fetchForecastHourly(url) {
       const periods = data.properties.periods.slice(0, 10);
 
       const timeCard = document.getElementsByClassName('glassy-div')[0];
-      timeCard.innerHTML = ''; // Clear any existing content
 
       shortDesc = periods[0].shortForecast;
+      setInterval(function(){document.getElementsByClassName('timeTitle')[0].innerHTML = getUserLocalTime();}, 100);
+      document.getElementsByClassName('currentTempTemp')[0].innerHTML = periods[0].temperature;
+      document.getElementsByClassName('currentTempExtension')[0].innerHTML = "°" + periods[0].temperatureUnit;
+
+      console.log(periods);
 
       periods.forEach(period => {
         const startTimeCell = document.createElement('div');
@@ -235,9 +181,5 @@ document.addEventListener("DOMContentLoaded", function() {
         timeout: 5000,
         maximumAge: 0,
     });
-    if (shortDesc != "") { 
-      sky();
-    } else {
-      setTimeout(sky, 500);
-    }
+    setInterval(sky, 500);
 });
