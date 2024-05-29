@@ -58,7 +58,7 @@ function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity) {
             if (cloud.position.x > 100) {
                 cloud.position.x = -100;
             }
-            cloud.rotation.z += cloud.speed * .01;
+            cloud.rotation.z += cloud.speed * 10;
             if (Math.random() < lightningRate) { // Random chance for lightning
                 cloud.material.opacity = 1;
                 setTimeout(() => {
