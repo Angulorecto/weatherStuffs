@@ -10,9 +10,9 @@ function sky() {
     } else if (shortDesc == "Chance Showers And Thunderstorms") {
       generateSky(15, 0.000, '#87CEEB', '#1E90FF', 0xCCCCCC, 1);
     } else if (shortDesc == "Partly Sunny") {
-      generateSky(10, 0.000, '#76989D', '#2F555B', 0xFFFFFF, 1);
+      generateSky(10, 0.000, '#8D95AD', '#6E738E', 0xFFFFFF, 1);
     } else if (shortDesc == "Mostly Sunny") {
-      generateSky(1, 0.000, '#8D95AD', '#6E738E', 0xFFFFFF, 1);
+      generateSky(1, 0.000, '#0091F6', '#56CDF7', 0xFFFFFF, 1);
     }
   }
 }
