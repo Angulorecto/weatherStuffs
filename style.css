@@ -33,11 +33,13 @@ canvas {
 .currentTempTemp {
     margin: unset;
     font-size: 410%;
+    color: black;
 }
 
 .currentTempExtension {
     margin-top: unset;
     font-size: 210%;
+    color: black;
 }
 .dataList {
     left: 16%;
