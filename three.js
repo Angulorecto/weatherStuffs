@@ -56,7 +56,7 @@ function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity) {
     function animate() {
         requestAnimationFrame(animate);
         clouds.forEach(cloud => {
-            cloud.position.x += cloud.speed;
+            cloud.position.x += cloud.speed * 3;
             if (cloud.position.x > 100) {
                 cloud.position.x = -100;
             }
