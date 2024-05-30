@@ -206,9 +206,8 @@ function updateData() {
   const currentTime = getUserLocalTime();
   document.getElementsByClassName("timeTitle")[0].innerHTML = currentTime;
   const firstPeriodStartTime = timeSlots[1].getElementsByTagName("div")[0].textContent;
-  const formattedFirstStartTime = reformatDate(firstPeriodStartTime);
 
-  if (formattedFirstStartTime < currentTime) {
+  if (firstPeriodStartTime < currentTime) {
     clearInterval(forecastInterval);
     timeSlots[1].remove();
     fetchWeatherData(9, 19);
