@@ -213,15 +213,16 @@ function updateData() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-  try {
-    navigator.geolocation.getCurrentPosition(success, error, {
+    try {
+      navigator.geolocation.getCurrentPosition(success, error, {
         enableHighAccuracy: true,
         timeout: 5000,
         maximumAge: 0,
-    });
-  } catch (error) {
-    alert(error);
-  }
+      });
+    } catch (error) {
+      alert(error);
+    }
+    alert(currentHour);
     setInterval(sky, 500);
     setInterval(updateData, 500);
 });
