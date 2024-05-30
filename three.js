@@ -202,6 +202,7 @@ function promptForLocation() {
 }
 
 function updateData() {
+  alert(currentHour);
   if (getUserLocalTime() !== currentHour) {
     var timeSlots = document.getElementsByClassName("timeSlot");
     for (var i = 1; i <= 10; i++) {
@@ -223,7 +224,6 @@ document.addEventListener("DOMContentLoaded", function() {
     } catch (error) {
       alert(error);
     }
-    alert(currentHour);
     setInterval(sky, 500);
     forecastInterval = setInterval(updateData, 500);
 });
