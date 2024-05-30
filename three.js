@@ -4,22 +4,23 @@ let skyPack = false;
 function sky() {
   if (skyPack == false) {
     if (shortDesc == "Isolated Showers And Thunderstorms") {
-      generateSky(25, 0.002, '#8D95AD', '#6E738E', 0x404040, 0.7, 7);
+      generateSky(25, 0.002, '#8D95AD', '#6E738E', 0x404040, 0.7, 7, true);
     } else if (shortDesc == "Scattered Showers And Thunderstorms") {
-      generateSky(20, 0.001, '#8D95AD', '#6E738E', 0x808080, 0.7, 7);
+      generateSky(20, 0.001, '#8D95AD', '#6E738E', 0x808080, 0.7, 7, true);
     } else if (shortDesc == "Chance Showers And Thunderstorms") {
-      generateSky(15, 0.000, '#87CEEB', '#1E90FF', 0xCCCCCC, 1, 4);
+      generateSky(15, 0.000, '#87CEEB', '#1E90FF', 0xCCCCCC, 1, 4, true);
     } else if (shortDesc == "Partly Sunny") {
-      generateSky(7, 0.000, '#8D95AD', '#6E738E', 0xFFFFFF, 1, 2);
+      generateSky(7, 0.000, '#8D95AD', '#6E738E', 0xFFFFFF, 1, 2, true);
     } else if (shortDesc == "Mostly Sunny") {
-      generateSky(3, 0.000, '#56CDF7', '#0091F6', 0xFFFFFF, 1, 2);
+      generateSky(3, 0.000, '#56CDF7', '#0091F6', 0xFFFFFF, 1, 2, true);
     } else if (shortDesc == "Sunny") {
-      generateSky(0, 0.000, '#56CDF7', '#0091F6', 0xFFFFFF, 1, 1);
+      generateSky(0, 0.000, '#56CDF7', '#0091F6', 0xFFFFFF, 1, 1, true);
     }
   }
 }
 
-function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity, windFactor) {
+function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity, windFactor, needSun) {
+    let sun;
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer();
@@ -36,6 +37,13 @@ function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity, windFa
     context.fillRect(0, 0, 256, 256);
     const backgroundTexture = new THREE.CanvasTexture(canvas);
     scene.background = backgroundTexture;
+    if (needSun == true) {
+      const sunGeometry = new THREE.CircleGeometry(1, 32);
+      const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+      const sunMesh = new THREE.Mesh(sunGeometry, sunMaterial);  
+      scene.add(sunMesh);
+      sun = sunMesh;
+    }
     const cloudTexture = new THREE.TextureLoader().load('realistic-white-cloud-png.webp');
     const cloudMaterial = new THREE.MeshBasicMaterial({
         map: cloudTexture,
@@ -70,6 +78,12 @@ function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity, windFa
                 }, 50); // Duration of the lightning flash
             }
         });
+
+        if (needSun == true) {
+            sun.rotation.x += 0.01;
+            sun.rotation.y += 0.01;
+        }
+      
         renderer.render(scene, camera);
     }
     animate();
