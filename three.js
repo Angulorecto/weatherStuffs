@@ -235,4 +235,5 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     setInterval(sky, 500);
     setInterval(updateData, 500);
+    setInterval(fetchWeatherData(0, 10), 300000);
 });
