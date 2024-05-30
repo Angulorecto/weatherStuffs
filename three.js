@@ -14,7 +14,7 @@ function sky() {
     } else if (shortDesc == "Mostly Sunny") {
       generateSky(3, 0.000, '#56CDF7', '#0091F6', 0xFFFFFF, 1, 2, true);
     } else if (shortDesc == "Sunny") {
-      generateSky(0, 0.000, '#56CDF7', '#0091F6', 0xFFFFFF, 1, 1, true);
+      generateSky(5, 0.000, '#56CDF7', '#0091F6', 0xFFFFFF, 1, 1, true);
     }
   }
 }
