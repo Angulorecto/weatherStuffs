@@ -217,7 +217,7 @@ function updateData() {
   const timeSlots = document.getElementsByClassName("timeSlot");
 
   if (currentTime > checkpointTime) {
-    document.removeElement(timeSlots[1]);
+    timeSlots[1].remove();
     fetchWeatherData(1, 11);
   }
 }
