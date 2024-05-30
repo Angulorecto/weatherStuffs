@@ -220,7 +220,7 @@ function addNewTime() {
       fetch(data.properties.forecastHourly)
         .then(response => response.json())
         .then(data => {
-          const period = data.properties.periods[document.getElementsByClassName("timeSlot").length];
+          const period = data.properties.periods[document.getElementsByClassName("timeSlot").length - 1];
           const timeCard = document.getElementsByClassName('glassy-div')[0];
           const startTimeCell = document.createElement('div');
           startTimeCell.className = "timeSlot";
