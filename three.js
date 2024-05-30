@@ -214,6 +214,7 @@ function removeAmPmAndAddZero(timeString, options) {
 function updateData() {
   const currentTime = removeAmPmAndAddZero(getUserLocalTime(), 'removeOnly');
   const checkpointTime = removeAmPmAndAddZero(document.getElementsByClassName("timeSlot")[1].getElementsByTagName("div")[0].innerHTML, "no");
+  const timeSlots = document.getElementsByClassName("timeSlot");
 
   if (currentTime > checkpointTime) {
     for (let i = 1; i <= 10; i++) {
