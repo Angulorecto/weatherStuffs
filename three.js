@@ -210,12 +210,17 @@ function updateData() {
   const timeSlots = document.getElementsByClassName("timeSlot");
   const currentTime = getUserLocalTime();
   document.getElementsByClassName("timeTitle")[0].innerHTML = currentTime;
+  
   const firstPeriodStartTime = removeAmPmAndAddZero(timeSlots[1].getElementsByTagName("div")[0].textContent);
-
+  
   if (firstPeriodStartTime < currentTime) {
     clearInterval(forecastInterval);
-    timeSlots[1].remove();
-    fetchWeatherData(9, 19);
+    
+    for (let i = 1; i <= 2; i++) {
+      timeSlots[i].remove();
+    }
+    
+    fetchWeatherData(3, 12);
   }
 }
 
