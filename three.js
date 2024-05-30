@@ -204,21 +204,13 @@ function promptForLocation() {
 function updateData() {
   const timeSlots = document.getElementsByClassName("timeSlot");
   const currentTime = getUserLocalTime();
-  
-  for (let i = 1; i <= 10; i++) {
-    if (timeSlots[i]) {
-      const periodStartTime = timeSlots[i].getElementsByTagName("div")[0].textContent;
-      const formattedStartTime = reformatDate(periodStartTime);
+  const firstPeriodStartTime = timeSlots[1].getElementsByTagName("div")[0].textContent;
+  const formattedFirstStartTime = reformatDate(firstPeriodStartTime);
 
-      if (formattedStartTime === currentTime) {
-        clearInterval(forecastInterval);
-        for (let j = i; j <= 10; j++) {
-          timeSlots[j].remove();
-        }
-        fetchWeatherData(i - 1, i + 9);
-        break;
-      }
-    }
+  if (formattedFirstStartTime < currentTime) {
+    clearInterval(forecastInterval);
+    timeSlots[1].remove();
+    fetchWeatherData(9, 19);
   }
 }
 
