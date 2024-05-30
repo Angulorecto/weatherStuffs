@@ -4,17 +4,17 @@ let skyPack = false;
 function sky() {
   if (skyPack == false) {
     if (shortDesc == "Isolated Showers And Thunderstorms") {
-      generateSky(25, 0.002, '#8D95AD', '#6E738E', 0x404040, 0.7, 7, true);
+      generateSky(25, 0.002, '#8D95AD', '#6E738E', 0x404040, 0.7, 7, false);
     } else if (shortDesc == "Scattered Showers And Thunderstorms") {
-      generateSky(20, 0.001, '#8D95AD', '#6E738E', 0x808080, 0.7, 7, true);
+      generateSky(20, 0.001, '#8D95AD', '#6E738E', 0x808080, 0.7, 7, false);
     } else if (shortDesc == "Chance Showers And Thunderstorms") {
-      generateSky(15, 0.000, '#87CEEB', '#1E90FF', 0xCCCCCC, 1, 4, true);
+      generateSky(15, 0.000, '#87CEEB', '#1E90FF', 0xCCCCCC, 1, 4, false);
     } else if (shortDesc == "Partly Sunny") {
       generateSky(7, 0.000, '#8D95AD', '#6E738E', 0xFFFFFF, 1, 2, true);
     } else if (shortDesc == "Mostly Sunny") {
       generateSky(3, 0.000, '#56CDF7', '#0091F6', 0xFFFFFF, 1, 2, true);
     } else if (shortDesc == "Sunny") {
-      generateSky(5, 0.000, '#56CDF7', '#0091F6', 0xFFFFFF, 1, 1, true);
+      generateSky(0, 0.000, '#56CDF7', '#0091F6', 0xFFFFFF, 1, 1, true);
     }
   }
 }
@@ -38,12 +38,16 @@ function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity, windFa
     const backgroundTexture = new THREE.CanvasTexture(canvas);
     scene.background = backgroundTexture;
     if (needSun == true) {
-        const sunGeometry = new THREE.CircleGeometry(1, 32);
+        const sunGeometry = new THREE.CircleGeometry(3, 32);
         const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
         const sunMesh = new THREE.Mesh(sunGeometry, sunMaterial);
+  
+        // Position the sun in the top left corner
+        sunMesh.position.x = -window.innerWidth / 2 + 50; // Adjust the x-coordinate as needed
+        sunMesh.position.y = window.innerHeight / 2 - 50; // Adjust the y-coordinate as needed
+
         scene.add(sunMesh);
         sun = sunMesh;
-        camera.position.z = 10; // Update camera position to ensure the sun is within view
     }
     const cloudTexture = new THREE.TextureLoader().load('realistic-white-cloud-png.webp');
     const cloudMaterial = new THREE.MeshBasicMaterial({
@@ -81,7 +85,7 @@ function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity, windFa
 
         if (needSun == true) {
             sun.rotation.x += 0.01;
-            sun.rotation.y += 0.01;
+            sun.rotation.z += 0.01;
         }
 
         renderer.render(scene, camera);
