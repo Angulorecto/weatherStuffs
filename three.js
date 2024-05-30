@@ -201,26 +201,25 @@ function promptForLocation() {
   locationPrompt.style.display = 'block';
 }
 
-function removeAmPmAndAddZero(timeString) {
-  const withoutAmPm = timeString.replace(/ am| pm/gi, "");
-  return withoutAmPm + ":00";
+function removeAmPmAndAddZero(timeString, options) {
+  if (options == "removeOnly") {
+    const withoutAmPm = timeString.replace(/ AM| PM/gi, "");
+    return withoutAmPm;
+  } else {
+    const withoutAmPm = timeString.replace(/ AM| PM/gi, "");
+    return withoutAmPm + ":00";
+  }
 }
 
 function updateData() {
-  const timeSlots = document.getElementsByClassName("timeSlot");
-  const currentTime = getUserLocalTime();
-  document.getElementsByClassName("timeTitle")[0].innerHTML = currentTime;
-  
-  const firstPeriodStartTime = removeAmPmAndAddZero(timeSlots[1].getElementsByTagName("div")[0].textContent);
-  
-  if (firstPeriodStartTime < currentTime) {
-    clearInterval(forecastInterval);
-    
-    for (let i = 1; i <= 2; i++) {
+  const currentTime = removeAmPmAndAddZero(getUserLocalTime(), 'removeOnly');
+  const checkpointTime = removeAmPmAndAddZero(document.getElementsByClassName("timeSlot")[1].getElementsByTagName("div")[0].innerHTML, "no");
+
+  if (currentTime > checkpointTime) {
+    for (let i = 1; i <= 10; i++) {
       timeSlots[i].remove();
     }
-    
-    fetchWeatherData(3, 12);
+    fetchWeatherData(1, 11);
   }
 }
 
