@@ -202,15 +202,23 @@ function promptForLocation() {
 }
 
 function updateData() {
-  alert(currentHour);
-  if (getUserLocalTime() !== currentHour) {
-    var timeSlots = document.getElementsByClassName("timeSlot");
-    for (var i = 1; i <= 10; i++) {
-      if (timeSlots[i]) {
-        timeSlots[i].remove();
+  const timeSlots = document.getElementsByClassName("timeSlot");
+  const currentTime = getUserLocalTime();
+  
+  for (let i = 1; i <= 10; i++) {
+    if (timeSlots[i]) {
+      const periodStartTime = timeSlots[i].getElementsByTagName("div")[0].textContent;
+      const formattedStartTime = reformatDate(periodStartTime);
+
+      if (formattedStartTime === currentTime) {
+        clearInterval(forecastInterval);
+        for (let j = i; j <= 10; j++) {
+          timeSlots[j].remove();
+        }
+        fetchWeatherData(i - 1, i + 9);
+        break;
       }
     }
-    fetchWeatherData(0, 10);
   }
 }
 
