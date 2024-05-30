@@ -208,7 +208,7 @@ function updateData() {
         timeSlots[i].remove();
       }
     }
-    fetchWeatherData(1, 11);
+    fetchWeatherData(0, 10);
   }
 }
 
