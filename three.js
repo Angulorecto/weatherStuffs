@@ -1,5 +1,6 @@
 let lat, lon, shortDesc, currentHour;
 let skyPack = false;
+let forecastInterval;
 
 function sky() {
   if (skyPack == false) {
@@ -155,7 +156,7 @@ function fetchForecastHourly(url, startRange, endRange) {
 
       shortDesc = periods[0].shortForecast;
       currentHour = reformatDate(periods[0].startTime);
-      setInterval(function(){document.getElementsByClassName('timeTitle')[0].innerHTML = getUserLocalTime();}, 100);
+      document.getElementsByClassName('timeTitle')[0].innerHTML = getUserLocalTime();
       document.getElementsByClassName('currentTempTemp')[0].innerHTML = periods[0].temperature;
       document.getElementsByClassName('currentTempExtension')[0].innerHTML = "°" + periods[0].temperatureUnit;
 
@@ -201,7 +202,7 @@ function promptForLocation() {
 }
 
 function updateData() {
-  if (getUserLocalTime != currentHour) {
+  if (getUserLocalTime() !== currentHour) {
     var timeSlots = document.getElementsByClassName("timeSlot");
     for (var i = 1; i <= 10; i++) {
       if (timeSlots[i]) {
@@ -224,5 +225,5 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     alert(currentHour);
     setInterval(sky, 500);
-    setInterval(updateData, 500);
+    forecastInterval = setInterval(updateData, 500);
 });
