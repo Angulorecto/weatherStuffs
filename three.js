@@ -44,8 +44,8 @@ function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity, windFa
         sunMesh.renderOrder = -1;
   
         // Position the sun in the top left corner
-        sunMesh.position.x = -window.innerWidth / 2 + 5; // Adjust the x-coordinate as needed
-        sunMesh.position.y = window.innerHeight / 2 - 5; // Adjust the y-coordinate as needed
+        sunMesh.position.x = -window.innerWidth / 2 + 0; // Adjust the x-coordinate as needed
+        sunMesh.position.y = window.innerHeight / 2 - 0; // Adjust the y-coordinate as needed
 
         scene.add(sunMesh);
         sun = sunMesh;
