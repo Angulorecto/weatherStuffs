@@ -1,4 +1,4 @@
-let lat, lon, shortDesc;
+let lat, lon, shortDesc, currentHour;
 let skyPack = false;
 
 function sky() {
@@ -117,7 +117,7 @@ function success(pos) {
   const crd = pos.coords;
   lat = crd.latitude;
   lon = crd.longitude;
-  fetchWeatherData();
+  fetchWeatherData(0, 10);
 }
 
 function error(err) {
@@ -125,7 +125,7 @@ function error(err) {
   alert(`ERROR(${err.code}): ${err.message}`);
 }
 
-function fetchWeatherData() {
+function fetchWeatherData(startRange, endRange) {
   const url = `https://api.weather.gov/points/${lat},${lon}`;
 
   fetch(url)
@@ -133,7 +133,7 @@ function fetchWeatherData() {
     .then(data => {
       const forecastHourlyUrl = data.properties.forecastHourly;
 
-      fetchForecastHourly(forecastHourlyUrl);
+      fetchForecastHourly(forecastHourlyUrl, startRange, endRange);
     })
     .catch(error => {
       console.error('Error fetching weather data:', error);
@@ -145,15 +145,16 @@ function getUserLocalTime() {
   return now.toLocaleTimeString(); // Returns a string representing the current time
 }
 
-function fetchForecastHourly(url) {
+function fetchForecastHourly(url, startRange, endRange) {
   fetch(url)
     .then(response => response.json())
     .then(data => {
-      const periods = data.properties.periods.slice(0, 10);
+      const periods = data.properties.periods.slice(startRange, endRange);
 
       const timeCard = document.getElementsByClassName('glassy-div')[0];
 
       shortDesc = periods[0].shortForecast;
+      currentHour = reformatDate(periods[0].startTime);
       setInterval(function(){document.getElementsByClassName('timeTitle')[0].innerHTML = getUserLocalTime();}, 100);
       document.getElementsByClassName('currentTempTemp')[0].innerHTML = periods[0].temperature;
       document.getElementsByClassName('currentTempExtension')[0].innerHTML = "°" + periods[0].temperatureUnit;
@@ -199,6 +200,18 @@ function promptForLocation() {
   locationPrompt.style.display = 'block';
 }
 
+function updateData() {
+  if (getUserLocalTime != currentHour) {
+    var timeSlots = document.getElementsByClassName("timeSlot");
+    for (var i = 1; i <= 10; i++) {
+      if (timeSlots[i]) {
+        timeSlots[i].remove();
+      }
+    }
+    fetchWeatherData(1, 11);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", function() {
   try {
     navigator.geolocation.getCurrentPosition(success, error, {
@@ -210,4 +223,5 @@ document.addEventListener("DOMContentLoaded", function() {
     alert(error);
   }
     setInterval(sky, 500);
+    setInterval(updateData, 500);
 });
