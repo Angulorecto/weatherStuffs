@@ -41,6 +41,7 @@ function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity, windFa
         const sunGeometry = new THREE.CircleGeometry(3, 32);
         const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
         const sunMesh = new THREE.Mesh(sunGeometry, sunMaterial);
+        sunMesh.renderOrder = -1;
   
         // Position the sun in the top left corner
         sunMesh.position.x = -window.innerWidth / 2 + 50; // Adjust the x-coordinate as needed
