@@ -230,5 +230,5 @@ document.addEventListener("DOMContentLoaded", function() {
       alert(error);
     }
     setInterval(sky, 500);
-    forecastInterval = setInterval(updateData, 500);
+    setInterval(updateData, 500);
 });
