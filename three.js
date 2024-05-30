@@ -254,7 +254,7 @@ function updateData() {
 
   if (currentTime > checkpointTime) {
     timeSlots[1].remove();
-    fetchWeatherData(1, 11);
+    addNewTime();
   }
 }
 
