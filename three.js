@@ -211,6 +211,42 @@ function removeAmPmAndAddZero(timeString, options) {
   }
 }
 
+function addNewTime() {
+  const url = `https://api.weather.gov/points/${lat},${lon}`;
+
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      fetch(data.properties.forecastHourly)
+        .then(response => response.json())
+        .then(data => {
+          const period = data.properties.periods[document.getElementsByClassName("timeSlot").length];
+          const timeCard = document.getElementsByClassName('glassy-div')[0];
+          const startTimeCell = document.createElement('div');
+          startTimeCell.className = "timeSlot";
+
+          const dateCell = document.createElement('div');
+          dateCell.textContent = reformatDate(period.startTime);
+          const tempCell = document.createElement('div');
+          tempCell.textContent = `${period.temperature}°${period.temperatureUnit}`;
+          const humidityCell = document.createElement('div');
+          humidityCell.textContent = `${period.relativeHumidity.value}%`;
+
+          startTimeCell.appendChild(dateCell);
+          startTimeCell.appendChild(tempCell);
+          startTimeCell.appendChild(humidityCell);
+
+          timeCard.appendChild(startTimeCell);
+        })
+        .catch(error => {
+          console.error('Error fetching forecastHourly data:', error);
+        });
+    })
+    .catch(error => {
+      console.error('Error fetching weather data:', error);
+    });
+}
+
 function updateData() {
   const currentTime = removeAmPmAndAddZero(getUserLocalTime(), 'removeOnly');
   const checkpointTime = removeAmPmAndAddZero(document.getElementsByClassName("timeSlot")[1].getElementsByTagName("div")[0].innerHTML, "no");
