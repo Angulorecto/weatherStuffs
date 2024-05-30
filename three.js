@@ -204,6 +204,7 @@ function promptForLocation() {
 function updateData() {
   const timeSlots = document.getElementsByClassName("timeSlot");
   const currentTime = getUserLocalTime();
+  document.getElementsByClassName("timeTitle")[0].innerHTML = currentTime;
   const firstPeriodStartTime = timeSlots[1].getElementsByTagName("div")[0].textContent;
   const formattedFirstStartTime = reformatDate(firstPeriodStartTime);
 
