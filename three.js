@@ -38,11 +38,12 @@ function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity, windFa
     const backgroundTexture = new THREE.CanvasTexture(canvas);
     scene.background = backgroundTexture;
     if (needSun == true) {
-      const sunGeometry = new THREE.CircleGeometry(1, 32);
-      const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
-      const sunMesh = new THREE.Mesh(sunGeometry, sunMaterial);  
-      scene.add(sunMesh);
-      sun = sunMesh;
+        const sunGeometry = new THREE.CircleGeometry(1, 32);
+        const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+        const sunMesh = new THREE.Mesh(sunGeometry, sunMaterial);
+        scene.add(sunMesh);
+        sun = sunMesh;
+        camera.position.z = 10; // Update camera position to ensure the sun is within view
     }
     const cloudTexture = new THREE.TextureLoader().load('realistic-white-cloud-png.webp');
     const cloudMaterial = new THREE.MeshBasicMaterial({
@@ -61,8 +62,7 @@ function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity, windFa
         scene.add(cloud);
         clouds.push(cloud);
     }
-    camera.position.z = 50;
-  
+
     function animate() {
         requestAnimationFrame(animate);
         clouds.forEach(cloud => {
@@ -70,7 +70,7 @@ function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity, windFa
             if (cloud.position.x > 100) {
                 cloud.position.x = -100;
             }
-            cloud.rotation.z += cloud.speed * .01;
+            cloud.rotation.z += cloud.speed * 0.01;
             if (Math.random() < lightningRate) { // Random chance for lightning
                 cloud.material.opacity = 1;
                 setTimeout(() => {
@@ -83,7 +83,7 @@ function generateSky(cloudsCount, lightningRate, bg1, bg2, tint, opacity, windFa
             sun.rotation.x += 0.01;
             sun.rotation.y += 0.01;
         }
-      
+
         renderer.render(scene, camera);
     }
     animate();
