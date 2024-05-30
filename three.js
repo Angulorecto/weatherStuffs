@@ -201,11 +201,16 @@ function promptForLocation() {
   locationPrompt.style.display = 'block';
 }
 
+function removeAmPmAndAddZero(timeString) {
+  const withoutAmPm = timeString.replace(/ am| pm/gi, "");
+  return withoutAmPm + ":00";
+}
+
 function updateData() {
   const timeSlots = document.getElementsByClassName("timeSlot");
   const currentTime = getUserLocalTime();
   document.getElementsByClassName("timeTitle")[0].innerHTML = currentTime;
-  const firstPeriodStartTime = timeSlots[1].getElementsByTagName("div")[0].textContent;
+  const firstPeriodStartTime = removeAmPmAndAddZero(timeSlots[1].getElementsByTagName("div")[0].textContent);
 
   if (firstPeriodStartTime < currentTime) {
     clearInterval(forecastInterval);
