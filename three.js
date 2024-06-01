@@ -13,7 +13,7 @@ function sky() {
     } else if (shortDesc == "Partly Sunny") {
       generateSky(7, 0.000, '#8D95AD', '#6E738E', 0xFFFFFF, 1, 2, true);
     } else if (shortDesc == "Mostly Sunny") {
-      generateSky(3, 0.000, '#56CDF7', '#0091F6', 0xFFFFFF, 1, 2, true);
+      generateSky(2, 0.000, '#56CDF7', '#0091F6', 0xFFFFFF, 1, 2, true);
     } else if (shortDesc == "Sunny") {
       generateSky(0, 0.000, '#56CDF7', '#0091F6', 0xFFFFFF, 1, 1, true);
     }
@@ -247,12 +247,20 @@ function addNewTime() {
     });
 }
 
+function timeStringToNumber(timeString) {
+  let [hours, minutes] = timeString.split(':').map(Number);
+  return hours * 60 + minutes;
+}
+
 function updateData() {
-  const currentTime = removeAmPmAndAddZero(getUserLocalTime(), 'removeOnly');
-  const checkpointTime = removeAmPmAndAddZero(document.getElementsByClassName("timeSlot")[1].getElementsByTagName("div")[0].innerHTML, "no");
+  const currentTime = timeStringToNumber(removeAmPmAndAddZero(getUserLocalTime(), 'removeOnly'));
+  const checkpointTime = timeStringToNumber(removeAmPmAndAddZero(document.getElementsByClassName("timeSlot")[1].getElementsByTagName("div")[0].innerHTML, "no"));
   const timeSlots = document.getElementsByClassName("timeSlot");
 
-  if (currentTime > checkpointTime) {
+  document.getElementsByClassName("timeTitle")[0].innerHTML = getUserLocalTime();
+
+  if (currentTime > (checkpointTime + 30)) {
+    console.log(currentTime, checkpointTime)
     timeSlots[1].remove();
     addNewTime();
   }
